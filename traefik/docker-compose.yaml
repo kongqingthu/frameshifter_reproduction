@@ -1,0 +1,56 @@
+version: "3"
+
+services:
+  reverse-proxy:
+    image: traefik:v2.5.3
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+      - ./key.pem:/key.pem
+      - ./cert.pem:/cert.pem
+      - ./tls.yaml:/tls.yaml
+      
+    # labels:
+    #   - "traefik.enbale=true"
+    #   - "traefik.http.services.reverse-proxy.loadbalancer.server.port=443"
+
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.websecure.http.tls=true"
+      - "--providers.docker=true"
+      - "--providers.file.filename=/tls.yaml"
+    # command: --providers.docker && sh -c "apk add tcpdump && apk add python3 && python3 test_tcpdump.py"
+    ports:
+      - "83:80"
+      - "93:443"
+  
+  origin:
+    image: python
+    volumes:
+    - ./app.py:/app.py
+    - ./app.log:/app.log
+    # entrypoint: bash -c "mkdir /app && cd /app && echo 'It works!' > index.html && python -m http.server 80"
+    # entrypoint: bash -c "mkdir /app && cd /app && echo 'Origin works!' > index.html && python -m http.server 80"
+    entrypoint: bash -c "pip install flask && python app.py && mkdir /app && cd /app && echo 'Origin works!' > index.html && python -m http.server 80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.origin.rule=Host(`www.kongqing.xyz`)"
+      - "traefik.http.services.origin.loadbalancer.server.port=80"
+
+  # origin:
+  #   image: python:3.6.9-alpine
+  #   volumes:
+  #     - /home/lzy/pcap/origin/traefik:/pcap
+  #     - /home/lzy/logs/traefik:/logs
+  #     - /home/lzy/my_repo/http2smuggler/echo_server/echo_server.py:/echo_server.py
+  #     - /home/lzy/my_repo/http2smuggler/echo_server/requirements.txt:/requirements.txt
+  #     - /home/lzy/my_repo/http2smuggler/echo_server/test_tcpdump.py:/test_tcpdump.py
+  #   command: sh -c "apk update && apk add tcpdump && python3 -m pip install -r requirements.txt && (python3 echo_server.py & python3 test_tcpdump.py)"
+  #   labels:
+  #       - "traefik.http.routers.origin.rule=Host(`origin.docker.localhost`)"
+  #       - "traefik.http.services.origin.loadbalancer.server.port=80"
+
+

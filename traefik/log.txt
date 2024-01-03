@@ -1,0 +1,194 @@
+"4": {
+      "input": {
+        "<headers-frame-base-1:1>": {
+          ":method": "POST",
+          ":scheme": "https",
+          ":path": "/reqid=4",
+          ":authority": "www.kongqing.xyz",
+          "flags": [
+            "EH"
+          ]
+        },
+        "<continuation-frame-pool-1:1>": {
+          "!transfer-encoding": "chunked",
+          "flags": [
+            "EH"
+          ]
+        },
+        "<data-frame-base-1:1>": {
+          "data": "0\r\n\r\n",
+          "flags": [
+            "ES"
+          ]
+        }
+      },
+      "mutations": [
+        "Inserting subtree '<continuation-frame-pool-1>' at pos 1 of '<sequence:1>'.",
+        "Inserting character '!' at pos 0 of <continuation-frame-pool-1-transfer-enc-header-name:1>."
+      ],
+      "responses": [
+        "response-code: \r\nerror: Protocol error\r\nhost_header: www.kongqing.xyz\r\n\r\n"
+      ]
+    },
+    "1": {
+      "input": {
+        "<headers-frame-base-2:1>": {
+          ":method": "POST",
+          ":scheme": "https",
+          ":path": "/reqid=1",
+          ":authority": "www.kongqing.xyz",
+          "flags": []
+        },
+        "<continuation-frame-base-2:1>": {
+          "some-other-header": "some-other-value",
+          "flags": []
+        },
+        "<continuation-frame-base-1:1>": {
+          "some-header": "some-value",
+          "flags": [
+            "EH"
+          ]
+        },
+        "<continuation-frame-pool-1:1>": {
+          "transfer-encoding": "\u0001\ridentity",
+          "flags": []
+        },
+        "<data-frame-base-2:1>": {
+          "data": "5\r\nBBBBB\r\n0\r\n\r\n",
+          "flags": []
+        },
+        "<data-frame-base-1:1>": {
+          "data": "5\r\nBBBBB\r\n0\r\n\r\n",
+          "flags": [
+            "ES"
+          ]
+        }
+      },
+      "mutations": [
+        "Inserting subtree '<continuation-frame-pool-1>' at pos 3 of '<sequence:1>'.",
+        "Inserting character '\\r' at pos 0 of <continuation-frame-pool-1-transfer-enc-header-value:1>.",
+        "Inserting character '\\x01' at pos 0 of <continuation-frame-pool-1-transfer-enc-header-value:1>."
+      ],
+      "responses": [
+        "response-code: \r\nerror: Protocol error\r\nhost_header: www.kongqing.xyz\r\n\r\n"
+      ]
+    },
+    "3": {
+      "input": {
+        "<headers-frame-base-2:1>": {
+          ":method": "POST",
+          ":scheme": "https",
+          ":path": "/reqid=3",
+          ":authority": "www.kongqing.xyz",
+          "flags": []
+        },
+        "<continuation-frame-base-1:1>": {
+          "some-header": "some-value",
+          "flags": [
+            "EH"
+          ]
+        },
+        "<data-frame-base-2:1>": {
+          "data": "0\r\n\r\n",
+          "flags": []
+        },
+        "<continuation-frame-pool-1:1>": {
+          "content-length\u0001": "\u001d20",
+          "flags": [
+            "EH"
+          ]
+        },
+        "<data-frame-base-1:1>": {
+          "data": "5\r\nBBBBB\r\n0\r\n\r\n",
+          "flags": [
+            "ES"
+          ]
+        }
+      },
+      "mutations": [
+        "Inserting subtree '<continuation-frame-pool-1>' at pos 3 of '<sequence:1>'.",
+        "Inserting character '\\x1d' at pos 0 of <continuation-frame-pool-1-content-len-header-value:1>.",
+        "Inserting character '\\x01' at pos 14 of <continuation-frame-pool-1-content-len-header-name:1>."
+      ],
+      "responses": [
+        "response-code: \r\nerror: Protocol error\r\nhost_header: www.kongqing.xyz\r\n\r\n"
+      ]
+    },
+    "10": {
+      "input": {
+        "<headers-frame-pool-1:1>": {
+          ":method": "GET",
+          ":scheme": "https",
+          ":path": "/reqid=10",
+          ":authority": "www.kongqing.xyz",
+          "\u0000transfer-encoding": "identity",
+          "flags": [
+            "EH"
+          ]
+        },
+        "<headers-frame-base-2:1>": {
+          ":method": "POST",
+          ":scheme": "https",
+          ":path": "/reqid=10",
+          ":authority": "www.kongqing.xyz",
+          "flags": []
+        },
+        "<continuation-frame-base-1:1>": {
+          "some-header": "some-value",
+          "flags": [
+            "EH"
+          ]
+        },
+        "<data-frame-base-1:1>": {
+          "data": "0\r\n\r\n",
+          "flags": [
+            "ES"
+          ]
+        }
+      },
+      "6": {
+      "input": {
+        "<headers-frame-pool-1:1>": {
+          ":method": "POST",
+          ":scheme": "https",
+          ":path": "/reqid=6",
+          ":authority": "www.kongqing.xyz",
+          "\u0019content-length": "5\f",
+          "flags": [
+            "ES",
+            "EH"
+          ]
+        },
+        "<headers-frame-base-2:1>": {
+          ":method": "POST",
+          ":scheme": "https",
+          ":path": "/reqid=6",
+          ":authority": "www.kongqing.xyz",
+          "flags": []
+        },
+        "<continuation-frame-base-2:1>": {
+          "some-other-header": "some-other-value",
+          "flags": []
+        },
+        "<continuation-frame-base-1:1>": {
+          "some-header": "some-value",
+          "flags": [
+            "EH"
+          ]
+        },
+        "<data-frame-base-1:1>": {
+          "data": "5\r\nBBBBB\r\n",
+          "flags": [
+            "ES"
+          ]
+        }
+      },
+      "mutations": [
+        "Inserting subtree '<headers-frame-pool-1>' at pos 0 of '<sequence:1>'.",
+        "Inserting character '\\x19' at pos 0 of <headers-frame-pool-1-content-len-header-name:1>.",
+        "Inserting character '\\x0c' at pos 1 of <headers-frame-pool-1-content-len-header-value:1>."
+      ],
+      "responses": [
+        "response-code: \r\nerror: Protocol error\r\nhost_header: www.kongqing.xyz\r\n\r\n"
+      ]
+    }

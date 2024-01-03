@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+
+  reverse-proxy:
+    image: caddy:2.4.5-alpine
+    restart: unless-stopped
+    ports:
+      - "83:80"
+      - "93:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./key.pem:/etc/caddy/key.pem
+      - ./cert.pem:/etc/caddy/cert.pem
+      # - caddy_data:/data
+      # - caddy_config:/config
+
+
+
+  origin:
+    image: python
+    entrypoint: bash -c "mkdir /app && cd /app && echo 'Origin works!' > index.html && python -m http.server 80"
+
+  # origin:
+  #   image: python:3.6.9-alpine
+  #   volumes:
+  #     - /home/lzy/pcap/origin/caddy:/pcap
+  #     - /home/lzy/logs/caddy:/logs
+  #     - /home/lzy/my_repo/http2smuggler/echo_server/echo_server.py:/echo_server.py
+  #     - /home/lzy/my_repo/http2smuggler/echo_server/requirements.txt:/requirements.txt
+  #     - /home/lzy/my_repo/http2smuggler/echo_server/test_tcpdump.py:/test_tcpdump.py
+  #   command: sh -c "apk update && apk add tcpdump && python3 -m pip install -r requirements.txt && (python3 echo_server.py & python3 test_tcpdump.py)"

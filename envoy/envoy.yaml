@@ -1,0 +1,52 @@
+static_resources:
+  listeners:
+  - address:
+      socket_address:
+        address: 0.0.0.0
+        port_value: 443  # 修改为 HTTPS 端口
+    filter_chains:
+    - filters:
+      - name: envoy.filters.network.http_connection_manager
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+          http2_protocol_options: {}  # 启用 HTTP/2
+          codec_type: auto
+          stat_prefix: ingress_http
+          route_config:
+            name: local_route
+            virtual_hosts:
+            - name: local_service
+              domains:
+              - "*"
+              routes:
+              - match:
+                  prefix: "/"
+                route:
+                  cluster: backend
+                  timeout: 5.00s
+          http_filters:
+            - name: envoy.filters.http.router
+      transport_socket:
+        name: envoy.transport_sockets.tls
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext
+          common_tls_context:
+            tls_certificates:
+              - certificate_chain: { filename: "/etc/envoy/cert.pem" }
+                private_key: { filename: "/etc/envoy/key.pem" }
+
+  clusters:
+  - name: backend
+    connect_timeout: 5.00s
+    type: LOGICAL_DNS
+    lb_policy: ROUND_ROBIN
+    load_assignment:
+      cluster_name: backend
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: origin # 源站地址
+                port_value: 80
+
